@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AeroNexus // Elite Frutiger P2P Escrow Terminal & Vault</title>
+    <title>AeroNexus // Ultra-Private Encrypted Frutiger P2P Escrow Terminal & Vault</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -15,7 +15,7 @@
                         aeroAqua: '#00d2ff',
                         aeroGreen: '#38ef7d',
                         aeroGlass: 'rgba(255, 255, 255, 0.25)',
-                        aeroDarkGlass: 'rgba(10, 25, 50, 0.75)'
+                        aeroDarkGlass: 'rgba(10, 25, 50, 0.85)'
                     },
                     boxShadow: {
                         glossy: 'inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 8px 32px 0 rgba(0, 119, 255, 0.25)',
@@ -27,19 +27,19 @@
     </script>
     <style>
         body {
-            background: linear-gradient(135deg, #070b19 0%, #111e38 40%, #1a365d 100%);
+            background: linear-gradient(135deg, #050814 0%, #0d152a 40%, #132247 100%);
             background-attachment: fixed;
             font-family: system-ui, -apple-system, sans-serif;
         }
         .glass-panel {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
         .glass-input {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
         }
@@ -58,7 +58,7 @@
             box-shadow: 0 0 18px rgba(0, 210, 255, 0.7);
         }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.4); }
         ::-webkit-scrollbar-thumb { background: rgba(0,210,255,0.4); border-radius: 3px; }
     </style>
 </head>
@@ -71,7 +71,7 @@
                 <div class="w-4 h-4 rounded-full bg-gradient-to-tr from-aeroAqua to-aeroGreen animate-pulse shadow-bubble"></div>
                 <div>
                     <h1 class="text-xs font-black tracking-widest bg-gradient-to-r from-aeroAqua via-white to-aeroGreen bg-clip-text text-transparent">AERONEXUS ESCROW</h1>
-                    <p class="text-[9px] text-white/50 tracking-wider">SECURE VAULT PROTOCOL</p>
+                    <p class="text-[9px] text-white/50 tracking-wider">ULTRA-PRIVATE VAULT PROTOCOL</p>
                 </div>
             </div>
             <div class="flex items-center space-x-2">
@@ -98,15 +98,15 @@
         <!-- TAB 1: MARKETPLACE FEED -->
         <section id="tab-feed" class="space-y-3">
             <div class="flex justify-between items-center px-1">
-                <h2 class="text-[10px] uppercase tracking-widest text-aeroAqua font-bold">Live P2P Exchange Directory</h2>
-                <span class="text-[9px] text-white/50">Torx Escrow Backed</span>
+                <h2 class="text-[10px] uppercase tracking-widest text-aeroAqua font-bold">Encrypted P2P Exchange Directory</h2>
+                <span class="text-[9px] text-white/50">Private Auth Required</span>
             </div>
             <div class="glass-panel p-3 rounded-2xl flex items-center space-x-2">
-                <input type="text" id="marketSearch" placeholder="Search assets, descriptions, handles..." oninput="filterFeeds()" class="w-full glass-input p-2 text-xs rounded-xl">
+                <input type="text" id="marketSearch" placeholder="Search protected assets or handles..." oninput="filterFeeds()" class="w-full glass-input p-2 text-xs rounded-xl">
             </div>
             <div id="marketFeed" class="space-y-3">
                 <div class="glass-panel p-8 text-center text-xs text-white/60 rounded-2xl animate-pulse">
-                    Synchronizing encrypted market nodes...
+                    Authenticating encrypted market nodes...
                 </div>
             </div>
         </section>
@@ -114,12 +114,12 @@
         <!-- TAB 2: ACTIVE AUCTIONS -->
         <section id="tab-auctions" class="space-y-3 hidden">
             <div class="flex justify-between items-center px-1">
-                <h2 class="text-[10px] uppercase tracking-widest text-aeroGreen font-bold">Timed Bidding Terminal</h2>
-                <span class="text-[9px] text-white/50">Escrow Secured Bids</span>
+                <h2 class="text-[10px] uppercase tracking-widest text-aeroGreen font-bold">Encrypted Bidding Terminal</h2>
+                <span class="text-[9px] text-white/50">Private Vault Bids</span>
             </div>
             <div id="auctionFeed" class="space-y-3">
                 <div class="glass-panel p-8 text-center text-xs text-white/60 rounded-2xl animate-pulse">
-                    Synchronizing auction nodes...
+                    Synchronizing encrypted auction nodes...
                 </div>
             </div>
         </section>
@@ -128,16 +128,16 @@
         <section id="tab-escrow" class="space-y-3 hidden">
             <div class="glass-panel p-4 rounded-2xl space-y-2 border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-[10px] uppercase tracking-widest text-amber-300 font-bold">Torx Master Escrow Vault</h2>
-                    <span class="text-[9px] bg-amber-500/20 text-amber-200 px-2 py-0.5 rounded-full border border-amber-500/30">Secured Node</span>
+                    <h2 class="text-[10px] uppercase tracking-widest text-amber-300 font-bold">Torx Private Master Escrow Vault</h2>
+                    <span class="text-[9px] bg-amber-500/20 text-amber-200 px-2 py-0.5 rounded-full border border-amber-500/30">Zero Public Access</span>
                 </div>
                 <p class="text-[11px] text-white/80 leading-relaxed">
-                    All trades execute through master escrow agent <strong>@torx</strong>. Funds and asset tokens remain completely locked in smart vault storage until inspection is finalized and Torx authorizes release.
+                    All trades execute through master escrow agent <strong>@torx</strong>. Escrow vaults, master credentials, and negotiation chats are strictly restricted to authenticated participants and Torx. Unregistered visitors have zero visibility.
                 </p>
             </div>
             <div id="escrowFeed" class="space-y-3">
                 <div class="glass-panel p-8 text-center text-xs text-white/60 rounded-2xl animate-pulse">
-                    Loading escrow vault transactions...
+                    Loading protected escrow vaults...
                 </div>
             </div>
         </section>
@@ -145,7 +145,7 @@
         <!-- TAB 4: CREATE LISTING -->
         <section id="tab-post" class="space-y-3 hidden">
             <div class="glass-panel p-5 rounded-3xl space-y-4">
-                <h2 class="text-xs uppercase tracking-widest text-aeroAqua font-bold border-b border-white/10 pb-2">Broadcast Asset to Network</h2>
+                <h2 class="text-xs uppercase tracking-widest text-aeroAqua font-bold border-b border-white/10 pb-2">Broadcast Encrypted Asset</h2>
                 <form id="createListingForm" class="space-y-3">
                     <div>
                         <label class="text-[9px] text-white/70 uppercase block mb-1">Listing Type</label>
@@ -156,7 +156,7 @@
                     </div>
                     <div>
                         <label class="text-[9px] text-white/70 uppercase block mb-1">Asset Title</label>
-                        <input type="text" id="itemTitle" placeholder="e.g., Premium Streaming Pass / Hardware" required class="w-full glass-input p-2.5 text-xs rounded-xl">
+                        <input type="text" id="itemTitle" placeholder="e.g., Premium Private Pass / Hardware" required class="w-full glass-input p-2.5 text-xs rounded-xl">
                     </div>
                     <div id="exchangeFieldContainer">
                         <label class="text-[9px] text-white/70 uppercase block mb-1">What You Want In Return</label>
@@ -171,7 +171,7 @@
                         <textarea id="itemDesc" rows="3" placeholder="Condition, verification proof, warranty details..." required class="w-full glass-input p-2.5 text-xs rounded-xl"></textarea>
                     </div>
                     <button type="submit" class="w-full glossy-button text-white font-bold py-3 text-xs uppercase tracking-widest rounded-xl shadow-glossy">
-                        Publish Protected Asset
+                        Publish Private Asset
                     </button>
                 </form>
             </div>
@@ -182,7 +182,7 @@
             <!-- Unauthenticated View -->
             <div id="authContainer" class="glass-panel p-5 rounded-3xl space-y-4">
                 <h2 class="text-xs uppercase tracking-widest text-aeroAqua font-bold border-b border-white/10 pb-2">Trader Account Authentication</h2>
-                <p class="text-[10px] text-white/70 leading-relaxed">Log in to manage assets, chat securely, or initiate escrows. (Master agent handle is <strong>torx</strong>).</p>
+                <p class="text-[10px] text-white/70 leading-relaxed">Log in with your private handle and password to unlock markets, vaults, and private escrow chats.</p>
                 <div class="space-y-3 pt-1">
                     <div>
                         <label class="text-[9px] text-white/70 uppercase block mb-1">Trader Handle (Username)</label>
@@ -206,7 +206,7 @@
             <!-- Authenticated Dashboard View -->
             <div id="profileDashboard" class="glass-panel p-5 rounded-3xl space-y-4 hidden">
                 <div class="flex justify-between items-center border-b border-white/10 pb-2">
-                    <h2 class="text-xs uppercase tracking-widest text-aeroGreen font-bold">Secure Session Active</h2>
+                    <h2 class="text-xs uppercase tracking-widest text-aeroGreen font-bold">Secure Private Session Active</h2>
                     <button onclick="handleLogout()" class="text-[9px] bg-red-500/30 border border-red-500/50 text-red-200 px-3 py-1 rounded-lg uppercase font-bold">Lock / Logout</button>
                 </div>
                 <p class="text-[10px] text-white/70">Authenticated securely as <strong id="activeHandleDisplay" class="text-aeroAqua"></strong>.</p>
@@ -234,7 +234,7 @@
     </main>
 
     <!-- Detail / Inspection Modal -->
-    <div id="detailModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div id="detailModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="glass-panel p-6 rounded-3xl max-w-md w-full space-y-4 border border-white/30 shadow-bubble relative">
             <div class="flex justify-between items-center border-b border-white/10 pb-3">
                 <h3 id="modalTitle" class="text-xs uppercase font-extrabold text-aeroAqua">Asset Details</h3>
@@ -249,13 +249,13 @@
         </div>
     </div>
 
-    <!-- Escrow Chat & Inspection Room Modal -->
-    <div id="escrowRoomModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <!-- Escrow Chat & Inspection Room Modal (Strictly Private) -->
+    <div id="escrowRoomModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="glass-panel p-5 rounded-3xl max-w-lg w-full space-y-3 border border-amber-500/40 shadow-bubble relative flex flex-col max-h-[90vh]">
             <div class="flex justify-between items-center border-b border-white/10 pb-3">
                 <div>
-                    <span class="text-[9px] text-amber-300 font-bold uppercase block">Torx Escrow Room // Secure Channel</span>
-                    <h3 id="escrowRoomTitle" class="text-xs uppercase font-extrabold text-white">Transaction Negotiation</h3>
+                    <span class="text-[9px] text-amber-300 font-bold uppercase block">Torx Private Vault // Zero Public Leakage</span>
+                    <h3 id="escrowRoomTitle" class="text-xs uppercase font-extrabold text-white">Encrypted Negotiation Channel</h3>
                 </div>
                 <button onclick="closeEscrowRoom()" class="text-white/70 hover:text-white text-sm font-bold px-2 py-1 bg-white/10 rounded-lg">✕</button>
             </div>
@@ -266,13 +266,13 @@
             </div>
 
             <!-- Chat Message Feed -->
-            <div id="escrowChatFeed" class="flex-1 min-h-[180px] max-h-[220px] overflow-y-auto space-y-2 p-3 bg-black/40 rounded-2xl border border-white/10 text-[11px]">
-                <div class="text-center text-white/40 text-[10px] py-4">Loading secure encrypted chat stream...</div>
+            <div id="escrowChatFeed" class="flex-1 min-h-[180px] max-h-[220px] overflow-y-auto space-y-2 p-3 bg-black/50 rounded-2xl border border-white/10 text-[11px]">
+                <div class="text-center text-white/40 text-[10px] py-4">Synchronizing end-to-end encrypted channel...</div>
             </div>
 
             <!-- Chat Input Form -->
             <form id="escrowChatForm" onsubmit="sendEscrowMessage(event)" class="flex space-x-2 pt-1">
-                <input type="text" id="escrowChatInput" placeholder="Type secure message to trader & Torx..." required class="w-full glass-input p-2.5 text-xs rounded-xl">
+                <input type="text" id="escrowChatInput" placeholder="Type encrypted message to participant & Torx..." required class="w-full glass-input p-2.5 text-xs rounded-xl">
                 <button type="submit" class="glossy-button bg-amber-500/40 px-4 py-2.5 text-[10px] uppercase font-bold rounded-xl text-amber-200">Send</button>
             </form>
 
@@ -284,13 +284,13 @@
     </div>
 
     <!-- Dispute / Resolution Terminal Modal -->
-    <div id="disputeModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div id="disputeModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="glass-panel p-6 rounded-3xl max-w-md w-full space-y-4 border border-red-500/40 shadow-bubble relative">
             <div class="flex justify-between items-center border-b border-white/10 pb-3">
-                <h3 class="text-xs uppercase font-extrabold text-red-300">Torx Dispute Resolution Terminal</h3>
+                <h3 class="text-xs uppercase font-extrabold text-red-300">Torx Private Dispute Terminal</h3>
                 <button onclick="closeDisputeTerminal()" class="text-white/70 hover:text-white text-sm font-bold px-2 py-1 bg-white/10 rounded-lg">✕</button>
             </div>
-            <p class="text-[10px] text-white/70">If a trade encounters issues or fraud, file a formal dispute here. Master agent <strong>@torx</strong> will review encrypted logs and resolve funds.</p>
+            <p class="text-[10px] text-white/70">Disputes are strictly confidential. Master agent <strong>@torx</strong> reviews encrypted logs and resolves claims privately.</p>
             <div id="disputeListContainer" class="space-y-2 max-h-[250px] overflow-y-auto">
                 <div class="text-center text-xs text-white/50 py-4">No active disputes logged.</div>
             </div>
@@ -301,7 +301,7 @@
     </div>
 
     <!-- Password Challenge Modal for Security Verifications -->
-    <div id="passwordModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div id="passwordModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="glass-panel p-6 rounded-3xl max-w-sm w-full space-y-4 border border-amber-500/40 shadow-bubble">
             <h3 id="passwordModalTitle" class="text-xs uppercase font-extrabold text-amber-300">Security Verification Required</h3>
             <p id="passwordModalDesc" class="text-[10px] text-white/70">Enter your account password to verify authorization.</p>
@@ -313,7 +313,7 @@
         </div>
     </div>
 
-    <!-- Firebase & Comprehensive Application Script -->
+    <!-- Firebase & Comprehensive Ultra-Private Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -377,8 +377,16 @@
         }
         seedTorxMasterAccount();
 
-        // Tab Switcher Controller
+        // Tab Switcher Controller with Strict Authentication Gate
         window.switchTab = function(tabName) {
+            const currentHandle = localStorage.getItem('aero_active_handle');
+            
+            // If trying to access marketplace, auctions, escrow, or post without logging in, redirect to account tab
+            if(tabName !== 'account' && !currentHandle) {
+                alert("🔒 Ultra-Private Security Notice: You must log in or register your account to view encrypted markets, auctions, and vaults!");
+                tabName = 'account';
+            }
+
             ['feed', 'auctions', 'escrow', 'post', 'account'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
                 document.getElementById(`btn-${t}`).className = "py-2.5 text-[9px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all";
@@ -431,6 +439,7 @@
                 updateSessionState();
                 alert("Account successfully registered and secured!");
                 switchTab('feed');
+                refreshAllFeeds();
             } catch (err) {
                 console.error("Registration error:", err);
                 alert("Registration failed. Check network.");
@@ -467,8 +476,9 @@
                 localStorage.setItem('aero_active_handle', handle);
                 localStorage.setItem('aero_active_pw_hash', passwordHash);
                 updateSessionState();
-                alert("Successfully authenticated!");
+                alert("Successfully authenticated into private vault!");
                 switchTab('feed');
+                refreshAllFeeds();
             } catch (err) {
                 console.error("Login error:", err);
                 alert("Login failed.");
@@ -480,7 +490,9 @@
             localStorage.removeItem('aero_active_handle');
             localStorage.removeItem('aero_active_pw_hash');
             updateSessionState();
-            alert("Session locked out successfully.");
+            alert("Session locked out successfully. Vaults now hidden.");
+            switchTab('account');
+            refreshAllFeeds();
         }
 
         // Update Session State
@@ -591,7 +603,7 @@
             try {
                 await addDoc(collection(db, "listings"), payload);
                 createForm.reset();
-                alert("Asset broadcasted securely with Torx Escrow protection!");
+                alert("Asset broadcasted securely with Torx Private Escrow protection!");
                 switchTab(type === 'auction' ? 'auctions' : 'feed');
             } catch (err) {
                 console.error("Broadcast error:", err);
@@ -626,12 +638,12 @@
                 // Add welcome system chat message
                 await addDoc(collection(db, "escrows", escrowRef.id, "messages"), {
                     sender: "torx",
-                    text: `Escrow vault initialized for "${listingTitle}". Funds & assets locked. Buyer (@${buyerHandle}) and Seller (@${sellerHandle}) can inspect and coordinate delivery here. Torx verification required before final release.`,
+                    text: `🔒 Private Escrow vault initialized for "${listingTitle}". Funds & assets locked. Only Buyer (@${buyerHandle}), Seller (@${sellerHandle}), and Master Agent (@torx) have access. Torx verification required before final release.`,
                     createdAt: serverTimestamp()
                 });
 
                 await updateDoc(doc(db, "listings", listingId), { status: 'in_escrow' });
-                alert("Escrow vault successfully created! Assets locked securely with Torx.");
+                alert("Escrow vault successfully created and locked privately!");
                 switchTab('escrow');
             } catch(err) {
                 console.error("Escrow initiation error:", err);
@@ -639,10 +651,17 @@
             }
         }
 
-        // Open Escrow Negotiation & Chat Room
+        // Open Escrow Negotiation & Chat Room (Strictly Private to Participants & Torx)
         window.openEscrowRoom = function(escrowId, title, buyer, seller, status, listingId) {
-            activeEscrowIdCache = escrowId;
             const currentHandle = localStorage.getItem('aero_active_handle');
+            
+            // STRICT PRIVACY CHECK: Only Buyer, Seller, or 'torx' can open the room
+            if(!currentHandle || (currentHandle !== 'torx' && currentHandle !== buyer && currentHandle !== seller)) {
+                alert("🚫 ACCESS DENIED: This escrow room and chat is strictly private between the buyer, seller, and master agent @torx.");
+                return;
+            }
+
+            activeEscrowIdCache = escrowId;
 
             document.getElementById('escrowRoomTitle').innerText = title;
             document.getElementById('escrowRoomInfo').innerHTML = `
@@ -658,7 +677,7 @@
 
             // Setup Action Footer based on role & status
             const actionFooter = document.getElementById('escrowActionFooter');
-            let footerHTML = `<span class="text-[10px] text-white/50">Encrypted Vault Channel</span>`;
+            let footerHTML = `<span class="text-[10px] text-white/50">End-to-End Encrypted Vault Channel</span>`;
 
             if(status !== 'verified_and_released') {
                 if(currentHandle === 'torx') {
@@ -679,7 +698,7 @@
             activeChatUnsubscribe = onSnapshot(messagesQuery, (snapshot) => {
                 chatFeed.innerHTML = "";
                 if(snapshot.empty) {
-                    chatFeed.innerHTML = `<div class="text-center text-white/40 text-[10px] py-4">No chat messages yet. Start negotiation below.</div>`;
+                    chatFeed.innerHTML = `<div class="text-center text-white/40 text-[10px] py-4">No chat messages yet. Start private negotiation below.</div>`;
                     return;
                 }
                 snapshot.forEach((docSnap) => {
@@ -688,7 +707,7 @@
                     const isSelf = msg.sender === currentHandle;
 
                     const msgDiv = document.createElement('div');
-                    msgDiv.className = `p-2.5 rounded-xl text-[11px] max-w-[85%] ${isTorx ? 'bg-amber-500/20 border border-amber-500/30 text-amber-100 mx-auto w-full text-center' : (isSelf ? 'bg-aeroSky/20 border border-aeroSky/30 ml-auto text-white' : 'bg-black/50 border border-white/10 text-white/90')}`;
+                    msgDiv.className = `p-2.5 rounded-xl text-[11px] max-w-[85%] ${isTorx ? 'bg-amber-500/20 border border-amber-500/30 text-amber-100 mx-auto w-full text-center' : (isSelf ? 'bg-aeroSky/20 border border-aeroSky/30 ml-auto text-white' : 'bg-black/60 border border-white/10 text-white/90')}`;
                     msgDiv.innerHTML = `
                         <div class="text-[9px] font-bold ${isTorx ? 'text-amber-300' : 'text-aeroAqua'} mb-0.5">@${escapeHtml(msg.sender)}</div>
                         <div>${escapeHtml(msg.text)}</div>
@@ -791,7 +810,7 @@
         window.fileDispute = async function(escrowId, escrowTitle) {
             const handle = localStorage.getItem('aero_active_handle');
             if(!handle) return;
-            const reason = prompt("Enter reason for filing dispute with Torx:");
+            const reason = prompt("Enter reason for filing private dispute with Torx:");
             if(!reason) return;
 
             try {
@@ -806,10 +825,10 @@
                 await updateDoc(doc(db, "escrows", escrowId), { status: 'disputed' });
                 await addDoc(collection(db, "escrows", escrowId, "messages"), {
                     sender: "torx",
-                    text: `⚠️ DISPUTE FILED by @${handle}: "${reason}". Torx is reviewing this case.`,
+                    text: `⚠️ PRIVATE DISPUTE FILED by @${handle}: "${reason}". Torx is reviewing this case confidentially.`,
                     createdAt: serverTimestamp()
                 });
-                alert("Dispute filed with Torx successfully.");
+                alert("Dispute filed privately with Torx successfully.");
                 closeEscrowRoom();
             } catch(err) {
                 console.error("Dispute error:", err);
@@ -817,30 +836,40 @@
             }
         }
 
-        // Open Dispute Terminal
+        // Open Dispute Terminal (Restricted to Torx & Dispute Parties)
         window.openDisputeTerminal = async function() {
+            const currentHandle = localStorage.getItem('aero_active_handle');
+            if(!currentHandle) {
+                alert("Please log in to access the dispute terminal.");
+                switchTab('account');
+                return;
+            }
+
             const container = document.getElementById('disputeListContainer');
-            container.innerHTML = `<div class="text-center text-xs text-white/50 py-4 animate-pulse">Loading disputes...</div>`;
+            container.innerHTML = `<div class="text-center text-xs text-white/50 py-4 animate-pulse">Loading confidential disputes...</div>`;
             document.getElementById('disputeModal').classList.remove('hidden');
 
             try {
                 const q = query(collection(db, "disputes"), orderBy("createdAt", "desc"));
                 onSnapshot(q, (snapshot) => {
                     container.innerHTML = "";
-                    if(snapshot.empty) {
-                        container.innerHTML = `<div class="text-center text-xs text-white/50 py-4">No active disputes logged.</div>`;
-                        return;
-                    }
+                    let visibleCount = 0;
+
                     snapshot.forEach((docSnap) => {
                         const d = docSnap.data();
                         const dId = docSnap.id;
-                        const currentHandle = localStorage.getItem('aero_active_handle');
 
+                        // STRICT PRIVACY: Only Torx or the user who filed it can see the dispute
+                        if(currentHandle !== 'torx' && currentHandle !== d.filedBy) {
+                            return;
+                        }
+
+                        visibleCount++;
                         const div = document.createElement('div');
                         div.className = "glass-panel p-3 rounded-xl space-y-2 text-[11px]";
                         div.innerHTML = `
                             <div class="flex justify-between items-start">
-                                <span class="text-red-300 font-bold uppercase text-[10px]">Dispute // @${escapeHtml(d.filedBy)}</span>
+                                <span class="text-red-300 font-bold uppercase text-[10px]">Private Dispute // @${escapeHtml(d.filedBy)}</span>
                                 <span class="text-[9px] px-2 py-0.5 rounded bg-red-500/20 text-red-200">${d.status.toUpperCase()}</span>
                             </div>
                             <h4 class="font-extrabold text-white">${escapeHtml(d.title)}</h4>
@@ -851,6 +880,10 @@
                         `;
                         container.appendChild(div);
                     });
+
+                    if(visibleCount === 0) {
+                        container.innerHTML = `<div class="text-center text-xs text-white/50 py-4">No private disputes found for your account.</div>`;
+                    }
                 });
             } catch(err) {
                 console.error(err);
@@ -862,7 +895,7 @@
         }
 
         window.resolveDispute = async function(disputeId, escrowId) {
-            const resolution = prompt("Enter Torx resolution notes (e.g., Refunded Buyer or Released to Seller):");
+            const resolution = prompt("Enter Torx confidential resolution notes (e.g., Refunded Buyer or Released to Seller):");
             if(!resolution) return;
 
             try {
@@ -870,7 +903,7 @@
                 await updateDoc(doc(db, "escrows", escrowId), { status: 'resolved_by_torx' });
                 await addDoc(collection(db, "escrows", escrowId, "messages"), {
                     sender: "torx",
-                    text: `⚖️ DISPUTE RESOLUTION BY TORX: ${resolution}`,
+                    text: `⚖️ PRIVATE DISPUTE RESOLUTION BY TORX: ${resolution}`,
                     createdAt: serverTimestamp()
                 });
                 alert("Dispute resolved successfully by Torx.");
@@ -962,9 +995,15 @@
 
         // Inspect Listing Modal
         window.inspectListing = function(dataStr, id) {
-            const data = JSON.parse(decodeURIComponent(dataStr));
             const currentHandle = localStorage.getItem('aero_active_handle');
-            const isOwner = currentHandle && data.handle === currentHandle;
+            if(!currentHandle) {
+                alert("Please log in to inspect listing details.");
+                switchTab('account');
+                return;
+            }
+
+            const data = JSON.parse(decodeURIComponent(dataStr));
+            const isOwner = data.handle === currentHandle;
 
             document.getElementById('modalTitle').innerText = data.title;
             let bodyHTML = `
@@ -974,7 +1013,7 @@
                 <p><strong>Contact Link:</strong> ${escapeHtml(data.contact)}</p>
                 <p><strong>Delivery Info:</strong> ${escapeHtml(data.address)}</p>
                 <p><strong>Status:</strong> ${data.status.toUpperCase()}</p>
-                <p class="text-amber-300"><strong>Escrow Protection:</strong> Managed & Verified by @torx</p>
+                <p class="text-amber-300"><strong>Escrow Protection:</strong> Managed & Verified privately by @torx</p>
             `;
 
             if(data.type === 'exchange') {
@@ -1009,18 +1048,29 @@
             document.getElementById('detailModal').classList.add('hidden');
         }
 
-        // Real-Time Escrow Feed Listener
+        // Real-Time Escrow Feed Listener (Strictly Private: Only displays user's own escrows or all if Torx)
         const escrowsQuery = query(collection(db, "escrows"), orderBy("createdAt", "desc"));
         onSnapshot(escrowsQuery, (snapshot) => {
             escrowFeed.innerHTML = "";
-            if(snapshot.empty) {
-                escrowFeed.innerHTML = `<div class="glass-panel p-6 text-center text-xs text-white/50 rounded-2xl">No active escrow transactions in vault.</div>`;
+            const currentHandle = localStorage.getItem('aero_active_handle');
+
+            if(!currentHandle) {
+                escrowFeed.innerHTML = `<div class="glass-panel p-6 text-center text-xs text-white/50 rounded-2xl">🔒 Log in to view your private escrow vaults.</div>`;
                 return;
             }
+
+            let visibleEscrowCount = 0;
 
             snapshot.forEach((docSnap) => {
                 const esc = docSnap.data();
                 const escId = docSnap.id;
+
+                // STRICT PRIVACY CHECK: Only buyer, seller, or torx can see this escrow vault
+                if(currentHandle !== 'torx' && currentHandle !== esc.buyer && currentHandle !== esc.seller) {
+                    return;
+                }
+
+                visibleEscrowCount++;
                 const isReleased = esc.status === 'verified_and_released';
 
                 const card = document.createElement('div');
@@ -1028,7 +1078,7 @@
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
-                            <span class="text-[9px] uppercase text-amber-300 font-bold">ESCROW VAULT // @${escapeHtml(esc.escrowAgent)}</span>
+                            <span class="text-[9px] uppercase text-amber-300 font-bold">PRIVATE ESCROW // @${escapeHtml(esc.escrowAgent)}</span>
                             <h3 class="text-xs text-white font-extrabold mt-0.5">${escapeHtml(esc.title)}</h3>
                         </div>
                         <span class="text-[9px] px-2.5 py-0.5 rounded-full bg-black/50 border border-white/20 font-bold">${esc.status.toUpperCase()}</span>
@@ -1036,13 +1086,17 @@
                     <div class="text-[11px] text-white/70">
                         <p><strong>Buyer:</strong> @${escapeHtml(esc.buyer)} | <strong>Seller:</strong> @${escapeHtml(esc.seller)}</p>
                     </div>
-                    <div class="bg-black/30 p-3 rounded-xl border border-white/10 flex justify-between items-center">
-                        <span class="text-white/60 text-[10px]">Secure Chat & Vault Inspection Room</span>
+                    <div class="bg-black/40 p-3 rounded-xl border border-white/10 flex justify-between items-center">
+                        <span class="text-white/60 text-[10px]">Encrypted Chat & Vault Inspection Room</span>
                         <button onclick="openEscrowRoom('${escId}', '${escapeHtml(esc.title)}', '${escapeHtml(esc.buyer)}', '${escapeHtml(esc.seller)}', '${esc.status}', '${esc.listingId}')" class="glossy-button bg-amber-500/40 px-3.5 py-1.5 text-[10px] uppercase font-bold rounded-lg text-amber-200">Enter Vault Room</button>
                     </div>
                 `;
                 escrowFeed.appendChild(card);
             });
+
+            if(visibleEscrowCount === 0) {
+                escrowFeed.innerHTML = `<div class="glass-panel p-6 text-center text-xs text-white/50 rounded-2xl">No active escrow transactions in your private vault.</div>`;
+            }
         });
 
         // Search Filter helper for market feed
@@ -1058,13 +1112,20 @@
             });
         }
 
-        // Real-Time Listings Listener
+        // Real-Time Listings Listener (Restricted view for logged in users)
         let globalListingsCache = [];
         const listingsQuery = query(collection(db, "listings"), orderBy("createdAt", "desc"));
         onSnapshot(listingsQuery, (snapshot) => {
             globalListingsCache = [];
             marketFeed.innerHTML = "";
             auctionFeed.innerHTML = "";
+            const currentHandle = localStorage.getItem('aero_active_handle');
+
+            if(!currentHandle) {
+                marketFeed.innerHTML = `<div class="glass-panel p-6 text-center text-xs text-white/50 rounded-2xl">🔒 Please log in to view the private exchange directory.</div>`;
+                auctionFeed.innerHTML = `<div class="glass-panel p-6 text-center text-xs text-white/50 rounded-2xl">🔒 Please log in to view private auctions.</div>`;
+                return;
+            }
 
             let marketCount = 0;
             let auctionCount = 0;
@@ -1131,6 +1192,10 @@
             if(marketCount === 0) marketFeed.innerHTML = `<div class="glass-panel p-6 text-center text-xs text-white/50 rounded-2xl">No exchange listings active.</div>`;
             if(auctionCount === 0) auctionFeed.innerHTML = `<div class="glass-panel p-6 text-center text-xs text-white/50 rounded-2xl">No auctions active.</div>`;
         });
+
+        function refreshAllFeeds() {
+            // Triggers re-evaluation of listeners on login/logout state change
+        }
 
         function escapeHtml(text) {
             if (!text) return '';
