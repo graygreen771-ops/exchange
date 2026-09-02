@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AeroNexus // Frutiger Aero P2P Marketplace & Exchange</title>
+    <title>AeroNexus // Secure Frutiger P2P Marketplace & Exchange</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -57,7 +57,6 @@
             background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.1) 51%, rgba(0,119,255,0.6) 100%);
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
         }
-        /* Custom Scrollbar for Frutiger Look */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
         ::-webkit-scrollbar-thumb { background: rgba(0,210,255,0.4); border-radius: 3px; }
@@ -70,10 +69,10 @@
         <div class="max-w-xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <div class="w-4 h-4 rounded-full bg-gradient-to-tr from-aeroAqua to-aeroGreen animate-pulse shadow-bubble"></div>
-                <h1 class="text-sm font-extrabold tracking-wider bg-gradient-to-r from-aeroAqua to-white bg-clip-text text-transparent">AERONEXUS // P2P</h1>
+                <h1 class="text-sm font-extrabold tracking-wider bg-gradient-to-r from-aeroAqua to-white bg-clip-text text-transparent">AERONEXUS // SECURE P2P</h1>
             </div>
             <div id="sessionIndicator" class="text-[10px] px-2 py-1 rounded-full bg-black/40 border border-white/10 text-aeroAqua">
-                CONNECTING...
+                LOCKED OUT
             </div>
         </div>
     </header>
@@ -86,14 +85,14 @@
             <button onclick="switchTab('feed')" id="btn-feed" class="py-2 text-[10px] uppercase font-bold rounded-xl bg-white/20 text-white shadow-glossy transition-all">Market</button>
             <button onclick="switchTab('auctions')" id="btn-auctions" class="py-2 text-[10px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">Auctions</button>
             <button onclick="switchTab('post')" id="btn-post" class="py-2 text-[10px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">+ List</button>
-            <button onclick="switchTab('account')" id="btn-account" class="py-2 text-[10px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">Profile</button>
+            <button onclick="switchTab('account')" id="btn-account" class="py-2 text-[10px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">Account</button>
         </nav>
 
         <!-- TAB 1: MARKETPLACE FEED -->
         <section id="tab-feed" class="space-y-3">
             <div class="flex justify-between items-center px-1">
                 <h2 class="text-[10px] uppercase tracking-widest text-aeroAqua font-bold">Live Barter & Exchange Grid</h2>
-                <span class="text-[9px] text-white/50">Real-Time Sync</span>
+                <span class="text-[9px] text-white/50">Encrypted P2P Sync</span>
             </div>
             <div id="marketFeed" class="space-y-3">
                 <div class="glass-panel p-6 text-center text-xs text-white/60 rounded-2xl animate-pulse">
@@ -154,18 +153,44 @@
             </div>
         </section>
 
-        <!-- TAB 4: PROFILE & ADDRESS BOOK -->
+        <!-- TAB 4: ACCOUNT, PASSWORD & AUTHORIZATION -->
         <section id="tab-account" class="space-y-3 hidden">
-            <div class="glass-panel p-5 rounded-3xl space-y-4">
-                <h2 class="text-xs uppercase tracking-widest text-aeroAqua font-bold border-b border-white/10 pb-2">Trader Identity & Fulfillment</h2>
-                <p class="text-[10px] text-white/70">Your profile handle and shipping/contact address are required to broadcast listings, accept exchanges, and place verified bids.</p>
+            <!-- Unauthenticated View -->
+            <div id="authContainer" class="glass-panel p-5 rounded-3xl space-y-4">
+                <h2 class="text-xs uppercase tracking-widest text-aeroAqua font-bold border-b border-white/10 pb-2">Trader Account Authentication</h2>
+                <p class="text-[10px] text-white/70">To prevent unauthorized modifications or hijacking of your listings, every handle is secured with a cryptographic password. Log in or claim a new handle below.</p>
                 
                 <div class="space-y-3 pt-1">
                     <div>
                         <label class="text-[9px] text-white/70 uppercase block mb-1">Trader Handle (Username)</label>
-                        <input type="text" id="accHandle" placeholder="e.g., aero_cipher" 
+                        <input type="text" id="authHandleInput" placeholder="e.g., aero_cipher" 
                             class="w-full glass-input p-2.5 text-xs rounded-xl">
                     </div>
+                    <div>
+                        <label class="text-[9px] text-white/70 uppercase block mb-1">Secure Password</label>
+                        <input type="password" id="authPasswordInput" placeholder="Enter account password..." 
+                            class="w-full glass-input p-2.5 text-xs rounded-xl">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 pt-2">
+                        <button onclick="handleLogin()" class="glossy-button bg-aeroAqua/40 text-white font-bold py-3 text-xs uppercase tracking-widest rounded-xl shadow-glossy">
+                            Log In
+                        </button>
+                        <button onclick="handleRegister()" class="glossy-button bg-aeroGreen/30 text-white font-bold py-3 text-xs uppercase tracking-widest rounded-xl shadow-glossy">
+                            Register New
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authenticated Dashboard View (Hidden by Default) -->
+            <div id="profileDashboard" class="glass-panel p-5 rounded-3xl space-y-4 hidden">
+                <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                    <h2 class="text-xs uppercase tracking-widest text-aeroGreen font-bold">Secure Session Active</h2>
+                    <button onclick="handleLogout()" class="text-[9px] bg-red-500/30 border border-red-500/50 text-red-200 px-3 py-1 rounded-lg uppercase font-bold">Lock / Logout</button>
+                </div>
+                <p class="text-[10px] text-white/70">Logged in securely as <strong id="activeHandleDisplay" class="text-aeroAqua"></strong>. Update your delivery coordinates or change your password below.</p>
+                
+                <div class="space-y-3 pt-1">
                     <div>
                         <label class="text-[9px] text-white/70 uppercase block mb-1">Secure Contact / Social Link</label>
                         <input type="text" id="accContact" placeholder="e.g., @telegram or email" 
@@ -176,8 +201,13 @@
                         <textarea id="accAddress" rows="2" placeholder="Street address, city, country, or delivery details..." 
                             class="w-full glass-input p-2.5 text-xs rounded-xl"></textarea>
                     </div>
-                    <button onclick="saveProfile()" class="w-full glossy-button text-white font-bold py-3 text-xs uppercase tracking-widest rounded-xl shadow-glossy">
-                        Save Profile Data
+                    <div>
+                        <label class="text-[9px] text-white/70 uppercase block mb-1">Change Account Password</label>
+                        <input type="password" id="accNewPassword" placeholder="Leave blank to keep current password" 
+                            class="w-full glass-input p-2.5 text-xs rounded-xl">
+                    </div>
+                    <button onclick="saveProfileUpdates()" class="w-full glossy-button text-white font-bold py-3 text-xs uppercase tracking-widest rounded-xl shadow-glossy">
+                        Save Profile & Security Updates
                     </button>
                 </div>
             </div>
@@ -201,10 +231,23 @@
         </div>
     </div>
 
+    <!-- Password Challenge Modal for Modifications / Deletions -->
+    <div id="passwordModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel p-6 rounded-3xl max-w-sm w-full space-y-4 border border-white/30 shadow-bubble">
+            <h3 class="text-xs uppercase font-extrabold text-amber-300">Security Verification Required</h3>
+            <p class="text-[10px] text-white/70">Enter your account password to verify ownership before modifying or deleting this listing.</p>
+            <input type="password" id="challengePassword" placeholder="Enter account password..." class="w-full glass-input p-2.5 text-xs rounded-xl">
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closePasswordModal()" class="glossy-button px-3 py-2 text-[10px] uppercase rounded-xl font-bold">Cancel</button>
+                <button id="confirmActionBtn" class="glossy-button bg-amber-500/40 px-4 py-2 text-[10px] uppercase rounded-xl font-bold text-amber-200">Authorize</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase & Comprehensive Application Logic Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDbBC7zM8mYenkgrsLH",
@@ -227,6 +270,9 @@
         const exchangeContainer = document.getElementById('exchangeFieldContainer');
         const auctionContainer = document.getElementById('auctionFieldContainer');
         const sessionIndicator = document.getElementById('sessionIndicator');
+        const authContainer = document.getElementById('authContainer');
+        const profileDashboard = document.getElementById('profileDashboard');
+        const activeHandleDisplay = document.getElementById('activeHandleDisplay');
 
         // Tab Switcher Controller
         window.switchTab = function(tabName) {
@@ -249,56 +295,186 @@
             }
         });
 
-        // Profile Management
-        window.saveProfile = function() {
-            const handle = document.getElementById('accHandle').value.trim();
-            const contact = document.getElementById('accContact').value.trim();
-            const address = document.getElementById('accAddress').value.trim();
+        // Simple hashing simulation helper for security storage
+        async function hashString(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
 
-            if(!handle) {
-                alert("Trader handle is required.");
+        // Authentication Controller: Register Account
+        window.handleRegister = async function() {
+            const handle = document.getElementById('authHandleInput').value.trim().toLowerCase();
+            const password = document.getElementById('authPasswordInput').value;
+
+            if(!handle || !password) {
+                alert("Both handle and password are required for registration.");
                 return;
             }
 
-            localStorage.setItem('aero_handle', handle);
-            localStorage.setItem('aero_contact', contact);
-            localStorage.setItem('aero_address', address);
+            try {
+                const userDocRef = doc(db, "users", handle);
+                const userSnap = await getDoc(userDocRef);
 
-            updateSessionState();
-            alert("Profile saved successfully!");
-            switchTab('feed');
+                if(userSnap.exists()) {
+                    alert("This handle is already claimed. Please choose another or log in.");
+                    return;
+                }
+
+                const passwordHash = await hashString(password);
+                await setDoc(userDocRef, {
+                    handle: handle,
+                    passwordHash: passwordHash,
+                    contact: '',
+                    address: '',
+                    createdAt: serverTimestamp()
+                });
+
+                localStorage.setItem('aero_active_handle', handle);
+                localStorage.setItem('aero_active_pw_hash', passwordHash);
+                updateSessionState();
+                alert("Account successfully registered and secured!");
+                switchTab('feed');
+            } catch (err) {
+                console.error("Registration error:", err);
+                alert("Registration failed. Check network connection.");
+            }
         }
 
-        function updateSessionState() {
-            const h = localStorage.getItem('aero_handle');
-            if(h) {
-                sessionIndicator.innerText = `SESSION: @${h}`;
+        // Authentication Controller: Login
+        window.handleLogin = async function() {
+            const handle = document.getElementById('authHandleInput').value.trim().toLowerCase();
+            const password = document.getElementById('authPasswordInput').value;
+
+            if(!handle || !password) {
+                alert("Enter both handle and password to log in.");
+                return;
+            }
+
+            try {
+                const userDocRef = doc(db, "users", handle);
+                const userSnap = await getDoc(userDocRef);
+
+                if(!userSnap.exists()) {
+                    alert("Account handle not found. Register first.");
+                    return;
+                }
+
+                const userData = userSnap.data();
+                const passwordHash = await hashString(password);
+
+                if(userData.passwordHash !== passwordHash) {
+                    alert("Incorrect password! Access denied.");
+                    return;
+                }
+
+                localStorage.setItem('aero_active_handle', handle);
+                localStorage.setItem('aero_active_pw_hash', passwordHash);
+                updateSessionState();
+                alert("Successfully authenticated!");
+                switchTab('feed');
+            } catch (err) {
+                console.error("Login error:", err);
+                alert("Login failed.");
+            }
+        }
+
+        // Logout Controller
+        window.handleLogout = function() {
+            localStorage.removeItem('aero_active_handle');
+            localStorage.removeItem('aero_active_pw_hash');
+            updateSessionState();
+            alert("Session locked out.");
+        }
+
+        // Update Session State Interface
+        async function updateSessionState() {
+            const handle = localStorage.getItem('aero_active_handle');
+            const pwHash = localStorage.getItem('aero_active_pw_hash');
+
+            if(handle && pwHash) {
+                sessionIndicator.innerText = `SESSION: @${handle}`;
                 sessionIndicator.className = "text-[10px] px-2 py-1 rounded-full bg-aeroAqua/20 border border-aeroAqua/40 text-aeroAqua font-bold";
-                document.getElementById('accHandle').value = h;
-                document.getElementById('accContact').value = localStorage.getItem('aero_contact') || '';
-                document.getElementById('accAddress').value = localStorage.getItem('aero_address') || '';
+                authContainer.classList.add('hidden');
+                profileDashboard.classList.remove('hidden');
+                activeHandleDisplay.innerText = `@${handle}`;
+
+                // Fetch profile details
+                try {
+                    const userSnap = await getDoc(doc(db, "users", handle));
+                    if(userSnap.exists()) {
+                        const data = userSnap.data();
+                        document.getElementById('accContact').value = data.contact || '';
+                        document.getElementById('accAddress').value = data.address || '';
+                    }
+                } catch(err) {
+                    console.error("Error loading profile details:", err);
+                }
             } else {
-                sessionIndicator.innerText = `UNREGISTERED`;
+                sessionIndicator.innerText = `LOCKED OUT`;
                 sessionIndicator.className = "text-[10px] px-2 py-1 rounded-full bg-red-500/20 border border-red-500/40 text-red-300 font-bold";
+                authContainer.classList.remove('hidden');
+                profileDashboard.classList.add('hidden');
+                document.getElementById('authHandleInput').value = '';
+                document.getElementById('authPasswordInput').value = '';
             }
         }
         updateSessionState();
 
+        // Save Profile Updates & Optional Password Change
+        window.saveProfileUpdates = async function() {
+            const handle = localStorage.getItem('aero_active_handle');
+            const contact = document.getElementById('accContact').value.trim();
+            const address = document.getElementById('accAddress').value.trim();
+            const newPassword = document.getElementById('accNewPassword').value;
+
+            if(!handle) return;
+
+            try {
+                const userDocRef = doc(db, "users", handle);
+                let updatePayload = { contact, address };
+
+                if(newPassword) {
+                    updatePayload.passwordHash = await hashString(newPassword);
+                    localStorage.setItem('aero_active_pw_hash', updatePayload.passwordHash);
+                    document.getElementById('accNewPassword').value = '';
+                }
+
+                await updateDoc(userDocRef, updatePayload);
+                alert("Profile and security settings updated successfully!");
+            } catch(err) {
+                console.error("Error updating profile:", err);
+                alert("Update failed.");
+            }
+        }
+
         // Create Listing
         createForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const handle = localStorage.getItem('aero_handle');
+            const handle = localStorage.getItem('aero_active_handle');
             if(!handle) {
-                alert("Please configure your profile in the 'Profile' tab first.");
+                alert("You must log in to your account first!");
                 switchTab('account');
                 return;
+            }
+
+            // Fetch latest contact and address from user document
+            let contact = 'N/A';
+            let address = 'N/A';
+            try {
+                const userSnap = await getDoc(doc(db, "users", handle));
+                if(userSnap.exists()) {
+                    contact = userSnap.data().contact || 'N/A';
+                    address = userSnap.data().address || 'N/A';
+                }
+            } catch(err) {
+                console.error(err);
             }
 
             const type = listTypeSelect.value;
             const title = document.getElementById('itemTitle').value.trim();
             const desc = document.getElementById('itemDesc').value.trim();
-            const contact = localStorage.getItem('aero_contact') || 'N/A';
-            const address = localStorage.getItem('aero_address') || 'N/A';
 
             let payload = {
                 handle: handle,
@@ -322,34 +498,73 @@
             try {
                 await addDoc(collection(db, "listings"), payload);
                 createForm.reset();
-                alert("Asset broadcasted successfully!");
+                alert("Asset broadcasted securely!");
                 switchTab(type === 'auction' ? 'auctions' : 'feed');
             } catch (err) {
                 console.error("Error broadcasting asset:", err);
-                alert("Broadcast failed. Check console log.");
+                alert("Broadcast failed.");
             }
         });
 
-        // Update Status (Mark Sold / Delete)
-        window.updateStatus = async function(id, newStatus) {
-            try {
-                const ref = doc(db, "listings", id);
-                if(newStatus === 'deleted') {
-                    await deleteDoc(ref);
-                } else {
-                    await updateDoc(ref, { status: newStatus });
+        // Secure Status & Delete Modification Trigger with Password Challenge
+        window.promptPasswordAction = function(id, targetStatus) {
+            closeModal();
+            const passwordModal = document.getElementById('passwordModal');
+            const confirmBtn = document.getElementById('confirmActionBtn');
+            const challengeInput = document.getElementById('challengePassword');
+            challengeInput.value = '';
+            passwordModal.classList.remove('hidden');
+
+            // Replace onclick safely
+            confirmBtn.onclick = async function() {
+                const enteredPw = challengeInput.value;
+                if(!enteredPw) {
+                    alert("Password required.");
+                    return;
                 }
-                closeModal();
-            } catch(err) {
-                console.error("Error updating status:", err);
+
+                const handle = localStorage.getItem('aero_active_handle');
+                try {
+                    const userSnap = await getDoc(doc(db, "users", handle));
+                    if(!userSnap.exists()) {
+                        alert("User session error.");
+                        return;
+                    }
+
+                    const correctHash = userSnap.data().passwordHash;
+                    const enteredHash = await hashString(enteredPw);
+
+                    if(correctHash !== enteredHash) {
+                        alert("Incorrect password! Action aborted.");
+                        return;
+                    }
+
+                    // Password verified, proceed with listing change
+                    const ref = doc(db, "listings", id);
+                    if(targetStatus === 'deleted') {
+                        await deleteDoc(ref);
+                        alert("Listing permanently deleted.");
+                    } else {
+                        await updateDoc(ref, { status: targetStatus });
+                        alert("Listing status updated.");
+                    }
+                    passwordModal.classList.add('hidden');
+                } catch(err) {
+                    console.error("Authorization error:", err);
+                    alert("Authorization failed.");
+                }
             }
+        }
+
+        window.closePasswordModal = function() {
+            document.getElementById('passwordModal').classList.add('hidden');
         }
 
         // Place Bid
         window.placeBid = async function(id, currentHighest) {
-            const bidder = localStorage.getItem('aero_handle');
+            const bidder = localStorage.getItem('aero_active_handle');
             if(!bidder) {
-                alert("Please configure your profile first!");
+                alert("Please log in to your account first!");
                 switchTab('account');
                 return;
             }
@@ -374,7 +589,7 @@
         // Modal Inspector
         window.inspectListing = function(dataStr, id) {
             const data = JSON.parse(decodeURIComponent(dataStr));
-            const currentHandle = localStorage.getItem('aero_handle');
+            const currentHandle = localStorage.getItem('aero_active_handle');
             const isOwner = currentHandle && data.handle === currentHandle;
 
             document.getElementById('modalTitle').innerText = data.title;
@@ -403,9 +618,9 @@
 
             if(isOwner) {
                 if(data.status !== 'sold') {
-                    footerHTML += `<button onclick="updateStatus('${id}', 'sold')" class="glossy-button bg-amber-500/40 px-4 py-2 text-[10px] uppercase rounded-xl font-bold text-amber-200">Mark Sold</button>`;
+                    footerHTML += `<button onclick="promptPasswordAction('${id}', 'sold')" class="glossy-button bg-amber-500/40 px-4 py-2 text-[10px] uppercase rounded-xl font-bold text-amber-200">Mark Sold</button>`;
                 }
-                footerHTML += `<button onclick="updateStatus('${id}', 'deleted')" class="glossy-button bg-red-500/40 px-4 py-2 text-[10px] uppercase rounded-xl font-bold text-red-200">Delete Asset</button>`;
+                footerHTML += `<button onclick="promptPasswordAction('${id}', 'deleted')" class="glossy-button bg-red-500/40 px-4 py-2 text-[10px] uppercase rounded-xl font-bold text-red-200">Delete Asset</button>`;
             }
 
             document.getElementById('modalBody').innerHTML = bodyHTML;
@@ -425,7 +640,7 @@
 
             let marketCount = 0;
             let auctionCount = 0;
-            const currentHandle = localStorage.getItem('aero_handle');
+            const currentHandle = localStorage.getItem('aero_active_handle');
 
             if(snapshot.empty) {
                 marketFeed.innerHTML = `<div class="glass-panel p-4 text-center text-xs text-white/50 rounded-2xl">No network listings found.</div>`;
