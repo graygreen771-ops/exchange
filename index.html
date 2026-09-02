@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P2P Exchange | Terminal Node</title>
+    <title>P2P Terminal | Marketplace & Auction Node</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -14,53 +14,133 @@
                     colors: {
                         obsidian: '#0a0a0a',
                         surface: '#121212',
-                        mutedAccent: '#d4af37'
+                        surfaceHighlight: '#1a1a1a',
+                        mutedAccent: '#d4af37',
+                        dangerRed: '#ff3333'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-obsidian text-neutral-200 min-h-screen font-mono selection:bg-mutedAccent selection:text-black">
+<body class="bg-obsidian text-neutral-200 min-h-screen font-mono selection:bg-mutedAccent selection:text-black pb-20">
 
     <div class="max-w-xl mx-auto p-4 border-x border-neutral-900 min-h-screen flex flex-col">
-        <!-- Header & User Identity -->
-        <header class="py-6 border-b border-neutral-900 flex justify-between items-center">
-            <h1 class="text-xs tracking-widest uppercase text-mutedAccent font-bold">/// EXCHANGE_NODE</h1>
-            <div id="userDisplay" class="text-[10px] text-neutral-400">
-                <!-- User handle injected here -->
+        <!-- Top Navigation Header -->
+        <header class="py-4 border-b border-neutral-900 flex justify-between items-center">
+            <div>
+                <h1 class="text-xs tracking-widest uppercase text-mutedAccent font-bold">/// P2P_NEXUS_NODE</h1>
+                <p id="activeUserLabel" class="text-[9px] text-neutral-500">SESSION: UNREGISTERED</p>
+            </div>
+            <div class="flex space-x-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-[9px] text-neutral-400">ONLINE</span>
             </div>
         </header>
 
-        <!-- Input Form to Post Exchange -->
-        <section class="my-6 p-4 bg-surface border border-neutral-800">
-            <h2 class="text-[10px] uppercase tracking-wider text-neutral-400 mb-4">Initialize New Trade Listing</h2>
-            <form id="exchangeForm" class="space-y-3">
-                <input type="text" id="userHandle" placeholder="Your Trader Handle / Alias" required
-                    class="w-full bg-black border border-neutral-800 p-3 text-sm focus:border-mutedAccent outline-none text-neutral-100 placeholder-neutral-700">
-                <input type="text" id="itemTitle" placeholder="Item Offering / Service" required
-                    class="w-full bg-black border border-neutral-800 p-3 text-sm focus:border-mutedAccent outline-none text-neutral-100 placeholder-neutral-700">
-                <input type="text" id="itemExchange" placeholder="Looking For In Return" required
-                    class="w-full bg-black border border-neutral-800 p-3 text-sm focus:border-mutedAccent outline-none text-neutral-100 placeholder-neutral-700">
-                <button type="submit" class="w-full bg-neutral-100 text-black font-bold py-3 text-xs uppercase tracking-widest hover:bg-mutedAccent transition-colors">
-                    Broadcast Listing
-                </button>
-            </form>
-        </section>
+        <!-- Navigation Tabs -->
+        <nav class="grid grid-cols-4 gap-1 my-4 bg-neutral-950 p-1 border border-neutral-800 text-center">
+            <button onclick="switchTab('feed')" id="btn-feed" class="py-2 text-[10px] uppercase font-bold bg-neutral-800 text-neutral-100 transition-all">Market</button>
+            <button onclick="switchTab('auctions')" id="btn-auctions" class="py-2 text-[10px] uppercase font-bold text-neutral-400 hover:text-neutral-200 transition-all">Auctions</button>
+            <button onclick="switchTab('post')" id="btn-post" class="py-2 text-[10px] uppercase font-bold text-neutral-400 hover:text-neutral-200 transition-all">+ List</button>
+            <button onclick="switchTab('account')" id="btn-account" class="py-2 text-[10px] uppercase font-bold text-neutral-400 hover:text-neutral-200 transition-all">Account</button>
+        </nav>
 
-        <!-- Live Feed Container -->
-        <section class="flex-1">
-            <h2 class="text-[10px] uppercase tracking-wider text-neutral-500 mb-4">Active Exchange Network</h2>
-            <div id="listingsFeed" class="space-y-3">
-                <p class="text-xs text-neutral-600 italic">Synchronizing with node...</p>
+        <!-- TAB 1: MARKETPLACE FEED -->
+        <div id="tab-feed" class="space-y-4 flex-1">
+            <div class="flex justify-between items-center">
+                <h2 class="text-[10px] uppercase tracking-wider text-neutral-500">Live Exchange Board</h2>
+                <span class="text-[9px] text-neutral-600">P2P Direct Trades</span>
             </div>
-        </section>
+            <div id="marketFeed" class="space-y-3">
+                <p class="text-xs text-neutral-600 italic">Syncing market nodes...</p>
+            </div>
+        </div>
+
+        <!-- TAB 2: AUCTIONS BOARD -->
+        <div id="tab-auctions" class="space-y-4 flex-1 hidden">
+            <div class="flex justify-between items-center">
+                <h2 class="text-[10px] uppercase tracking-wider text-neutral-500">Active Bidding Auctions</h2>
+                <span class="text-[9px] text-neutral-600">Real-Time Bids</span>
+            </div>
+            <div id="auctionFeed" class="space-y-3">
+                <p class="text-xs text-neutral-600 italic">Syncing auction nodes...</p>
+            </div>
+        </div>
+
+        <!-- TAB 3: CREATE LISTING -->
+        <div id="tab-post" class="space-y-4 flex-1 hidden">
+            <div class="p-4 bg-surface border border-neutral-800 space-y-4">
+                <h2 class="text-[10px] uppercase tracking-wider text-mutedAccent font-bold">Broadcast New Asset / Offer</h2>
+                <form id="createListingForm" class="space-y-3">
+                    <div>
+                        <label class="text-[9px] text-neutral-400 uppercase block mb-1">Listing Type</label>
+                        <select id="listType" class="w-full bg-black border border-neutral-800 p-2.5 text-xs text-neutral-100 outline-none focus:border-mutedAccent">
+                            <option value="exchange">Direct Exchange (Barter/Trade)</option>
+                            <option value="auction">Timed Auction / Bidding</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-neutral-400 uppercase block mb-1">Item / Service Title</label>
+                        <input type="text" id="itemTitle" placeholder="e.g., Rare Terminal Deck / Custom Code" required
+                            class="w-full bg-black border border-neutral-800 p-2.5 text-xs text-neutral-100 outline-none focus:border-mutedAccent">
+                    </div>
+                    <div id="exchangeFieldContainer">
+                        <label class="text-[9px] text-neutral-400 uppercase block mb-1">What You Want In Return</label>
+                        <input type="text" id="itemExchangeFor" placeholder="e.g., Crypto, Hardware, or Specific Service"
+                            class="w-full bg-black border border-neutral-800 p-2.5 text-xs text-neutral-100 outline-none focus:border-mutedAccent">
+                    </div>
+                    <div id="auctionFieldContainer" class="hidden">
+                        <label class="text-[9px] text-neutral-400 uppercase block mb-1">Starting Bid Price / Value</label>
+                        <input type="number" id="itemStartingBid" placeholder="e.g., 50"
+                            class="w-full bg-black border border-neutral-800 p-2.5 text-xs text-neutral-100 outline-none focus:border-mutedAccent">
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-neutral-400 uppercase block mb-1">Detailed Description</label>
+                        <textarea id="itemDesc" rows="3" placeholder="Condition, terms, specifications..." required
+                            class="w-full bg-black border border-neutral-800 p-2.5 text-xs text-neutral-100 outline-none focus:border-mutedAccent"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-neutral-100 text-black font-bold py-3 text-xs uppercase tracking-widest hover:bg-mutedAccent transition-colors">
+                        Publish to Global Network
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TAB 4: ACCOUNT & ADDRESS BOOK -->
+        <div id="tab-account" class="space-y-4 flex-1 hidden">
+            <div class="p-4 bg-surface border border-neutral-800 space-y-4">
+                <h2 class="text-[10px] uppercase tracking-wider text-mutedAccent font-bold">Trader Identity & Shipping Profile</h2>
+                <p class="text-[10px] text-neutral-400">Your profile details are required to list items, receive bids, and display your delivery/contact address to verified peers.</p>
+                
+                <div class="space-y-3 pt-2">
+                    <div>
+                        <label class="text-[9px] text-neutral-400 uppercase block mb-1">Trader Handle (Username)</label>
+                        <input type="text" id="accHandle" placeholder="e.g., cipher_punk" 
+                            class="w-full bg-black border border-neutral-800 p-2.5 text-xs text-neutral-100 outline-none focus:border-mutedAccent">
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-neutral-400 uppercase block mb-1">Contact Email or Secure Handle</label>
+                        <input type="text" id="accContact" placeholder="e.g., node@proton.me or @telegram" 
+                            class="w-full bg-black border border-neutral-800 p-2.5 text-xs text-neutral-100 outline-none focus:border-mutedAccent">
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-neutral-400 uppercase block mb-1">Shipping / Fulfillment Address</label>
+                        <textarea id="accAddress" rows="2" placeholder="Street address, city, country, or delivery instructions..." 
+                            class="w-full bg-black border border-neutral-800 p-2.5 text-xs text-neutral-100 outline-none focus:border-mutedAccent"></textarea>
+                    </div>
+                    <button onclick="saveProfile()" class="w-full bg-neutral-800 text-neutral-100 border border-neutral-700 font-bold py-2.5 text-xs uppercase tracking-widest hover:border-mutedAccent transition-colors">
+                        Save Profile Settings
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Firebase & App Logic Script -->
+    <!-- Firebase & Core Logic Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDbBC7zM8mYenkgrsLH",
@@ -75,85 +155,245 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const form = document.getElementById('exchangeForm');
-        const feed = document.getElementById('listingsFeed');
-        const handleInput = document.getElementById('userHandle');
-        const userDisplay = document.getElementById('userDisplay');
+        // UI Element References
+        const marketFeed = document.getElementById('marketFeed');
+        const auctionFeed = document.getElementById('auctionFeed');
+        const createForm = document.getElementById('createListingForm');
+        const listTypeSelect = document.getElementById('listType');
+        const exchangeContainer = document.getElementById('exchangeFieldContainer');
+        const auctionContainer = document.getElementById('auctionFieldContainer');
+        const activeUserLabel = document.getElementById('activeUserLabel');
 
-        // Remember user handle locally on phone
-        const savedHandle = localStorage.getItem('p2p_handle');
-        if (savedHandle) {
-            handleInput.value = savedHandle;
-            userDisplay.innerHTML = `NODE: <span class="text-mutedAccent">${escapeHtml(savedHandle)}</span>`;
+        // Tab Switching Logic
+        window.switchTab = function(tabName) {
+            ['feed', 'auctions', 'post', 'account'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-${t}`).className = "py-2 text-[10px] uppercase font-bold text-neutral-400 hover:text-neutral-200 transition-all";
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            document.getElementById(`btn-${tabName}`).className = "py-2 text-[10px] uppercase font-bold bg-neutral-800 text-neutral-100 transition-all";
         }
 
-        handleInput.addEventListener('input', (e) => {
-            localStorage.setItem('p2p_handle', e.target.value);
-            userDisplay.innerHTML = `NODE: <span class="text-mutedAccent">${escapeHtml(e.target.value || 'ANONYMOUS')}</span>`;
-        });
-
-        // Handle Form Submission
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const handle = handleInput.value.trim();
-            const title = document.getElementById('itemTitle').value.trim();
-            const exchange = document.getElementById('itemExchange').value.trim();
-
-            try {
-                await addDoc(collection(db, "listings"), {
-                    handle: handle,
-                    title: title,
-                    exchangeFor: exchange,
-                    createdAt: serverTimestamp()
-                });
-                document.getElementById('itemTitle').value = '';
-                document.getElementById('itemExchange').value = '';
-            } catch (error) {
-                console.error("Error writing document: ", error);
+        // Toggle form fields based on listing type
+        listTypeSelect.addEventListener('change', (e) => {
+            if(e.target.value === 'auction') {
+                exchangeContainer.classList.add('hidden');
+                auctionContainer.classList.remove('hidden');
+            } else {
+                auctionContainer.classList.add('hidden');
+                exchangeContainer.classList.remove('hidden');
             }
         });
 
-        // Delete function for item owner
-        window.deleteListing = async function(id) {
-            try {
-                await deleteDoc(doc(db, "listings", id));
-            } catch (error) {
-                console.error("Error deleting document: ", error);
-            }
-        }
+        // Profile Management via Local Storage + State
+        window.saveProfile = function() {
+            const handle = document.getElementById('accHandle').value.trim();
+            const contact = document.getElementById('accContact').value.trim();
+            const address = document.getElementById('accAddress').value.trim();
 
-        // Real-Time Listener
-        const q = query(collection(db, "listings"), orderBy("createdAt", "desc"));
-        onSnapshot(q, (snapshot) => {
-            feed.innerHTML = "";
-            if (snapshot.empty) {
-                feed.innerHTML = `<p class="text-xs text-neutral-600 italic">No active listings found.</p>`;
+            if(!handle) {
+                alert("Please enter a valid trader handle.");
                 return;
             }
+
+            localStorage.setItem('p2p_handle', handle);
+            localStorage.setItem('p2p_contact', contact);
+            localStorage.setItem('p2p_address', address);
+            
+            updateProfileUI();
+            alert("Profile settings saved locally and linked to session!");
+            switchTab('feed');
+        }
+
+        function updateProfileUI() {
+            const h = localStorage.getItem('p2p_handle');
+            if(h) {
+                activeUserLabel.innerText = `SESSION: @${h}`;
+                document.getElementById('accHandle').value = h;
+                document.getElementById('accContact').value = localStorage.getItem('p2p_contact') || '';
+                document.getElementById('accAddress').value = localStorage.getItem('p2p_address') || '';
+            } else {
+                activeUserLabel.innerText = `SESSION: UNREGISTERED (SETUP IN ACCOUNT TAB)`;
+            }
+        }
+        updateProfileUI();
+
+        // Create Listing Form Submission
+        createForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const handle = localStorage.getItem('p2p_handle');
+            if(!handle) {
+                alert("Please configure your trader handle in the 'Account' tab before broadcasting listings.");
+                switchTab('account');
+                return;
+            }
+
+            const type = listTypeSelect.value;
+            const title = document.getElementById('itemTitle').value.trim();
+            const desc = document.getElementById('itemDesc').value.trim();
+            const contact = localStorage.getItem('p2p_contact') || 'N/A';
+            const address = localStorage.getItem('p2p_address') || 'N/A';
+
+            let payload = {
+                handle: handle,
+                contact: contact,
+                address: address,
+                type: type,
+                title: title,
+                description: desc,
+                status: 'active',
+                createdAt: serverTimestamp()
+            };
+
+            if(type === 'exchange') {
+                payload.exchangeFor = document.getElementById('itemExchangeFor').value.trim();
+            } else {
+                payload.startingBid = parseFloat(document.getElementById('itemStartingBid').value) || 0;
+                payload.currentBid = parseFloat(document.getElementById('itemStartingBid').value) || 0;
+                payload.highestBidder = 'None';
+            }
+
+            try {
+                await addDoc(collection(db, "listings"), payload);
+                createForm.reset();
+                alert("Listing broadcasted successfully across all node networks!");
+                switchTab(type === 'auction' ? 'auctions' : 'feed');
+            } catch (err) {
+                console.error("Error creating listing:", err);
+                alert("Failed to broadcast listing. Check console.");
+            }
+        });
+
+        // Delete or Mark Sold Action
+        window.updateListingStatus = async function(id, newStatus) {
+            try {
+                const ref = doc(db, "listings", id);
+                if(newStatus === 'deleted') {
+                    await deleteDoc(ref);
+                } else {
+                    await updateDoc(ref, { status: newStatus });
+                }
+            } catch(err) {
+                console.error("Error updating status:", err);
+            }
+        }
+
+        // Place Bid on Auction
+        window.placeBid = async function(id, currentHighest) {
+            const bidder = localStorage.getItem('p2p_handle');
+            if(!bidder) {
+                alert("Please set up your profile account tab first!");
+                switchTab('account');
+                return;
+            }
+            const bidInput = prompt(`Current highest bid is ${currentHighest}. Enter your higher bid amount:`);
+            const bidVal = parseFloat(bidInput);
+            if(isNaN(bidVal) || bidVal <= currentHighest) {
+                alert("Invalid bid amount. Must be higher than current price.");
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, "listings", id), {
+                    currentBid: bidVal,
+                    highestBidder: bidder
+                });
+                alert("Bid successfully placed on live network!");
+            } catch(err) {
+                console.error("Error placing bid:", err);
+            }
+        }
+
+        // Real-Time Sync Listener for Firestore
+        const q = query(collection(db, "listings"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            marketFeed.innerHTML = "";
+            auctionFeed.innerHTML = "";
+            
+            let marketCount = 0;
+            let auctionCount = 0;
+            const currentHandle = localStorage.getItem('p2p_handle');
+
+            if (snapshot.empty) {
+                marketFeed.innerHTML = `<p class="text-xs text-neutral-600 italic">No market listings found.</p>`;
+                auctionFeed.innerHTML = `<p class="text-xs text-neutral-600 italic">No active auctions found.</p>`;
+                return;
+            }
+
             snapshot.forEach((docSnap) => {
                 const data = docSnap.data();
-                const docId = docSnap.id;
-                const currentHandle = handleInput.value.trim();
+                const id = docSnap.id;
                 const isOwner = currentHandle && data.handle === currentHandle;
+                const isSold = data.status === 'sold';
 
-                const card = document.createElement('div');
-                card.className = "p-4 bg-surface border border-neutral-800 hover:border-neutral-700 transition-all";
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <span class="text-[10px] uppercase text-neutral-500 block">Trader: @${escapeHtml(data.handle || 'Anonymous')}</span>
-                            <span class="text-xs text-mutedAccent font-bold">${escapeHtml(data.title)}</span>
+                if (data.type === 'auction') {
+                    auctionCount++;
+                    const card = document.createElement('div');
+                    card.className = `p-4 bg-surface border ${isSold ? 'border-neutral-900 opacity-60' : 'border-neutral-800'} space-y-2`;
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-[9px] uppercase text-mutedAccent font-bold">AUCTION // @${escapeHtml(data.handle)}</span>
+                                <h3 class="text-xs text-neutral-100 font-bold mt-0.5">${escapeHtml(data.title)}</h3>
+                            </div>
+                            <span class="text-[9px] px-1.5 py-0.5 bg-neutral-900 text-neutral-400 border border-neutral-800">${data.status.toUpperCase()}</span>
                         </div>
-                        <span class="text-[9px] text-neutral-600 font-mono">LIVE</span>
-                    </div>
-                    <p class="text-xs text-neutral-400 mb-3">Wants: <span class="text-neutral-200">${escapeHtml(data.exchangeFor)}</span></p>
-                    <div class="flex justify-between items-center pt-2 border-t border-neutral-900">
-                        <span class="text-[9px] text-neutral-600">ID: ${docId.slice(0, 6)}...</span>
-                        ${isOwner ? `<button onclick="deleteListing('${docId}')" class="text-[10px] text-red-400 hover:text-red-300 uppercase tracking-wider">Mark Sold / Delete</button>` : `<span class="text-[10px] text-neutral-600">Active Trade</span>`}
-                    </div>
-                `;
-                feed.appendChild(card);
+                        <p class="text-[11px] text-neutral-400">${escapeHtml(data.description)}</p>
+                        <div class="bg-black/50 p-2.5 border border-neutral-900 text-[11px] space-y-1">
+                            <div class="flex justify-between text-neutral-300">
+                                <span>Current Bid:</span>
+                                <span class="text-mutedAccent font-bold">${data.currentBid} (Leader: @${escapeHtml(data.highestBidder)})</span>
+                            </div>
+                            <div class="flex justify-between text-neutral-500 text-[10px]">
+                                <span>Fulfillment Address:</span>
+                                <span>${escapeHtml(data.address)}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-neutral-900 text-[10px]">
+                            <span class="text-neutral-600">ID: ${id.slice(0,6)}</span>
+                            <div class="space-x-2">
+                                ${!isSold && !isOwner ? `<button onclick="placeBid('${id}', ${data.currentBid})" class="text-emerald-400 font-bold uppercase hover:underline">Place Bid</button>` : ''}
+                                ${isOwner ? `
+                                    ${!isSold ? `<button onclick="updateListingStatus('${id}', 'sold')" class="text-amber-400 uppercase hover:underline">Mark Sold</button>` : ''}
+                                    <button onclick="updateListingStatus('${id}', 'deleted')" class="text-dangerRed uppercase hover:underline">Delete</button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                    auctionFeed.appendChild(card);
+                } else {
+                    marketCount++;
+                    const card = document.createElement('div');
+                    card.className = `p-4 bg-surface border ${isSold ? 'border-neutral-900 opacity-60' : 'border-neutral-800'} space-y-2`;
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-[9px] uppercase text-mutedAccent font-bold">EXCHANGE // @${escapeHtml(data.handle)}</span>
+                                <h3 class="text-xs text-neutral-100 font-bold mt-0.5">${escapeHtml(data.title)}</h3>
+                            </div>
+                            <span class="text-[9px] px-1.5 py-0.5 bg-neutral-900 text-neutral-400 border border-neutral-800">${data.status.toUpperCase()}</span>
+                        </div>
+                        <p class="text-[11px] text-neutral-400">${escapeHtml(data.description)}</p>
+                        <div class="bg-black/50 p-2.5 border border-neutral-900 text-[11px] space-y-1">
+                            <p class="text-neutral-300"><strong>Offering Exchange For:</strong> ${escapeHtml(data.exchangeFor)}</p>
+                            <p class="text-neutral-400 text-[10px]"><strong>Contact / Address:</strong> ${escapeHtml(data.address)} (${escapeHtml(data.contact)})</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-neutral-900 text-[10px]">
+                            <span class="text-neutral-600">ID: ${id.slice(0,6)}</span>
+                            <div class="space-x-2">
+                                ${isOwner ? `
+                                    ${!isSold ? `<button onclick="updateListingStatus('${id}', 'sold')" class="text-amber-400 uppercase hover:underline">Mark Sold</button>` : ''}
+                                    <button onclick="updateListingStatus('${id}', 'deleted')" class="text-dangerRed uppercase hover:underline">Delete</button>
+                                ` : `<span class="text-neutral-500">Active Offer</span>`}
+                            </div>
+                        </div>
+                    `;
+                    marketFeed.appendChild(card);
+                }
             });
+
+            if(marketCount === 0) marketFeed.innerHTML = `<p class="text-xs text-neutral-600 italic">No active direct exchange listings.</p>`;
+            if(auctionCount === 0) auctionFeed.innerHTML = `<p class="text-xs text-neutral-600 italic">No active auctions running.</p>`;
         });
 
         function escapeHtml(text) {
