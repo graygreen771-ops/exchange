@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AeroNexus // Secure Frutiger P2P Marketplace & Exchange</title>
+    <title>AeroNexus // Secure Frutiger P2P Marketplace with Torx Escrow</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -69,7 +69,7 @@
         <div class="max-w-xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <div class="w-4 h-4 rounded-full bg-gradient-to-tr from-aeroAqua to-aeroGreen animate-pulse shadow-bubble"></div>
-                <h1 class="text-sm font-extrabold tracking-wider bg-gradient-to-r from-aeroAqua to-white bg-clip-text text-transparent">AERONEXUS // SECURE P2P</h1>
+                <h1 class="text-sm font-extrabold tracking-wider bg-gradient-to-r from-aeroAqua to-white bg-clip-text text-transparent">AERONEXUS // ESCROW P2P</h1>
             </div>
             <div id="sessionIndicator" class="text-[10px] px-2 py-1 rounded-full bg-black/40 border border-white/10 text-aeroAqua">
                 LOCKED OUT
@@ -81,18 +81,19 @@
     <main class="max-w-xl mx-auto p-4 space-y-4">
 
         <!-- Navigation Tabs -->
-        <nav class="grid grid-cols-4 gap-1 glass-panel p-1.5 rounded-2xl text-center">
-            <button onclick="switchTab('feed')" id="btn-feed" class="py-2 text-[10px] uppercase font-bold rounded-xl bg-white/20 text-white shadow-glossy transition-all">Market</button>
-            <button onclick="switchTab('auctions')" id="btn-auctions" class="py-2 text-[10px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">Auctions</button>
-            <button onclick="switchTab('post')" id="btn-post" class="py-2 text-[10px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">+ List</button>
-            <button onclick="switchTab('account')" id="btn-account" class="py-2 text-[10px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">Account</button>
+        <nav class="grid grid-cols-5 gap-1 glass-panel p-1.5 rounded-2xl text-center">
+            <button onclick="switchTab('feed')" id="btn-feed" class="py-2 text-[9px] uppercase font-bold rounded-xl bg-white/20 text-white shadow-glossy transition-all">Market</button>
+            <button onclick="switchTab('auctions')" id="btn-auctions" class="py-2 text-[9px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">Auctions</button>
+            <button onclick="switchTab('escrow')" id="btn-escrow" class="py-2 text-[9px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">Escrow</button>
+            <button onclick="switchTab('post')" id="btn-post" class="py-2 text-[9px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">+ List</button>
+            <button onclick="switchTab('account')" id="btn-account" class="py-2 text-[9px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all">Account</button>
         </nav>
 
         <!-- TAB 1: MARKETPLACE FEED -->
         <section id="tab-feed" class="space-y-3">
             <div class="flex justify-between items-center px-1">
                 <h2 class="text-[10px] uppercase tracking-widest text-aeroAqua font-bold">Live Barter & Exchange Grid</h2>
-                <span class="text-[9px] text-white/50">Encrypted P2P Sync</span>
+                <span class="text-[9px] text-white/50">Torx Escrow Protected</span>
             </div>
             <div id="marketFeed" class="space-y-3">
                 <div class="glass-panel p-6 text-center text-xs text-white/60 rounded-2xl animate-pulse">
@@ -105,7 +106,7 @@
         <section id="tab-auctions" class="space-y-3 hidden">
             <div class="flex justify-between items-center px-1">
                 <h2 class="text-[10px] uppercase tracking-widest text-aeroGreen font-bold">Live Bidding Terminal</h2>
-                <span class="text-[9px] text-white/50">Dynamic Bids</span>
+                <span class="text-[9px] text-white/50">Escrow Secured Bids</span>
             </div>
             <div id="auctionFeed" class="space-y-3">
                 <div class="glass-panel p-6 text-center text-xs text-white/60 rounded-2xl animate-pulse">
@@ -114,7 +115,23 @@
             </div>
         </section>
 
-        <!-- TAB 3: CREATE LISTING -->
+        <!-- TAB 3: ESCROW TRANSACTIONS -->
+        <section id="tab-escrow" class="space-y-3 hidden">
+            <div class="flex justify-between items-center px-1">
+                <h2 class="text-[10px] uppercase tracking-widest text-amber-300 font-bold">Active Escrow Vault (Agent: Torx)</h2>
+                <span class="text-[9px] text-white/50">Password: jj verification</span>
+            </div>
+            <div class="glass-panel p-4 rounded-2xl text-[11px] text-white/80 space-y-2">
+                <p>All trades flow through <strong>Torx</strong> escrow. Assets or funds are locked until Torx verifies delivery and releases the transaction.</p>
+            </div>
+            <div id="escrowFeed" class="space-y-3">
+                <div class="glass-panel p-6 text-center text-xs text-white/60 rounded-2xl animate-pulse">
+                    Loading escrow transactions...
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: CREATE LISTING -->
         <section id="tab-post" class="space-y-3 hidden">
             <div class="glass-panel p-5 rounded-3xl space-y-4">
                 <h2 class="text-xs uppercase tracking-widest text-aeroAqua font-bold border-b border-white/10 pb-2">Broadcast Asset to Network</h2>
@@ -153,17 +170,17 @@
             </div>
         </section>
 
-        <!-- TAB 4: ACCOUNT, PASSWORD & AUTHORIZATION -->
+        <!-- TAB 5: ACCOUNT, PASSWORD & AUTHORIZATION -->
         <section id="tab-account" class="space-y-3 hidden">
             <!-- Unauthenticated View -->
             <div id="authContainer" class="glass-panel p-5 rounded-3xl space-y-4">
                 <h2 class="text-xs uppercase tracking-widest text-aeroAqua font-bold border-b border-white/10 pb-2">Trader Account Authentication</h2>
-                <p class="text-[10px] text-white/70">To prevent unauthorized modifications or hijacking of your listings, every handle is secured with a cryptographic password. Log in or claim a new handle below.</p>
+                <p class="text-[10px] text-white/70">Log in or register an account. Escrow agent handle is <strong>Torx</strong> (password: <strong>jj</strong>).</p>
                 
                 <div class="space-y-3 pt-1">
                     <div>
                         <label class="text-[9px] text-white/70 uppercase block mb-1">Trader Handle (Username)</label>
-                        <input type="text" id="authHandleInput" placeholder="e.g., aero_cipher" 
+                        <input type="text" id="authHandleInput" placeholder="e.g., Torx or cipher" 
                             class="w-full glass-input p-2.5 text-xs rounded-xl">
                     </div>
                     <div>
@@ -188,7 +205,7 @@
                     <h2 class="text-xs uppercase tracking-widest text-aeroGreen font-bold">Secure Session Active</h2>
                     <button onclick="handleLogout()" class="text-[9px] bg-red-500/30 border border-red-500/50 text-red-200 px-3 py-1 rounded-lg uppercase font-bold">Lock / Logout</button>
                 </div>
-                <p class="text-[10px] text-white/70">Logged in securely as <strong id="activeHandleDisplay" class="text-aeroAqua"></strong>. Update your delivery coordinates or change your password below.</p>
+                <p class="text-[10px] text-white/70">Logged in securely as <strong id="activeHandleDisplay" class="text-aeroAqua"></strong>. Update delivery coordinates or password below.</p>
                 
                 <div class="space-y-3 pt-1">
                     <div>
@@ -231,11 +248,11 @@
         </div>
     </div>
 
-    <!-- Password Challenge Modal for Modifications / Deletions -->
+    <!-- Password Challenge Modal for Modifications / Deletions / Escrow Release -->
     <div id="passwordModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="glass-panel p-6 rounded-3xl max-w-sm w-full space-y-4 border border-white/30 shadow-bubble">
-            <h3 class="text-xs uppercase font-extrabold text-amber-300">Security Verification Required</h3>
-            <p class="text-[10px] text-white/70">Enter your account password to verify ownership before modifying or deleting this listing.</p>
+            <h3 id="passwordModalTitle" class="text-xs uppercase font-extrabold text-amber-300">Security Verification Required</h3>
+            <p id="passwordModalDesc" class="text-[10px] text-white/70">Enter your account password to verify ownership.</p>
             <input type="password" id="challengePassword" placeholder="Enter account password..." class="w-full glass-input p-2.5 text-xs rounded-xl">
             <div class="flex justify-end space-x-2 pt-2">
                 <button onclick="closePasswordModal()" class="glossy-button px-3 py-2 text-[10px] uppercase rounded-xl font-bold">Cancel</button>
@@ -265,6 +282,7 @@
         // UI References
         const marketFeed = document.getElementById('marketFeed');
         const auctionFeed = document.getElementById('auctionFeed');
+        const escrowFeed = document.getElementById('escrowFeed');
         const createForm = document.getElementById('createListingForm');
         const listTypeSelect = document.getElementById('listType');
         const exchangeContainer = document.getElementById('exchangeFieldContainer');
@@ -274,14 +292,43 @@
         const profileDashboard = document.getElementById('profileDashboard');
         const activeHandleDisplay = document.getElementById('activeHandleDisplay');
 
+        // Simple hashing simulation helper for security storage
+        async function hashString(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Auto-seed Torx account with password 'jj' on first launch
+        async function seedTorxAccount() {
+            try {
+                const torxRef = doc(db, "users", "torx");
+                const torxSnap = await getDoc(torxRef);
+                if (!torxSnap.exists()) {
+                    const pwHash = await hashString("jj");
+                    await setDoc(torxRef, {
+                        handle: "torx",
+                        passwordHash: pwHash,
+                        contact: "@torx_escrow",
+                        address: "Official Escrow Vault Nexus",
+                        createdAt: serverTimestamp()
+                    });
+                }
+            } catch (err) {
+                console.error("Error seeding Torx account:", err);
+            }
+        }
+        seedTorxAccount();
+
         // Tab Switcher Controller
         window.switchTab = function(tabName) {
-            ['feed', 'auctions', 'post', 'account'].forEach(t => {
+            ['feed', 'auctions', 'escrow', 'post', 'account'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`btn-${t}`).className = "py-2 text-[10px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all";
+                document.getElementById(`btn-${t}`).className = "py-2 text-[9px] uppercase font-bold rounded-xl text-white/70 hover:text-white transition-all";
             });
             document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            document.getElementById(`btn-${tabName}`).className = "py-2 text-[10px] uppercase font-bold rounded-xl bg-white/20 text-white shadow-glossy transition-all";
+            document.getElementById(`btn-${tabName}`).className = "py-2 text-[9px] uppercase font-bold rounded-xl bg-white/20 text-white shadow-glossy transition-all";
         }
 
         // Toggle form fields
@@ -294,14 +341,6 @@
                 exchangeContainer.classList.remove('hidden');
             }
         });
-
-        // Simple hashing simulation helper for security storage
-        async function hashString(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
 
         // Authentication Controller: Register Account
         window.handleRegister = async function() {
@@ -400,7 +439,6 @@
                 profileDashboard.classList.remove('hidden');
                 activeHandleDisplay.innerText = `@${handle}`;
 
-                // Fetch profile details
                 try {
                     const userSnap = await getDoc(doc(db, "users", handle));
                     if(userSnap.exists()) {
@@ -459,7 +497,6 @@
                 return;
             }
 
-            // Fetch latest contact and address from user document
             let contact = 'N/A';
             let address = 'N/A';
             try {
@@ -498,7 +535,7 @@
             try {
                 await addDoc(collection(db, "listings"), payload);
                 createForm.reset();
-                alert("Asset broadcasted securely!");
+                alert("Asset broadcasted securely with Torx Escrow backing!");
                 switchTab(type === 'auction' ? 'auctions' : 'feed');
             } catch (err) {
                 console.error("Error broadcasting asset:", err);
@@ -506,16 +543,98 @@
             }
         });
 
+        // Initiate Escrow Transaction for an Item
+        window.initiateEscrow = async function(listingId, listingTitle, sellerHandle) {
+            const buyerHandle = localStorage.getItem('aero_active_handle');
+            if(!buyerHandle) {
+                alert("Please log in to initiate an escrow transaction.");
+                switchTab('account');
+                return;
+            }
+            if(buyerHandle === sellerHandle) {
+                alert("You cannot buy your own listed asset.");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "escrows"), {
+                    listingId: listingId,
+                    title: listingTitle,
+                    seller: sellerHandle,
+                    buyer: buyerHandle,
+                    escrowAgent: "torx",
+                    status: "held_by_torx",
+                    createdAt: serverTimestamp()
+                });
+                // Mark listing as in-escrow / pending
+                await updateDoc(doc(db, "listings", listingId), { status: 'in_escrow' });
+                alert("Escrow initiated! Funds/Assets are now locked with Torx (password: jj).");
+                switchTab('escrow');
+            } catch(err) {
+                console.error("Escrow initiation error:", err);
+                alert("Failed to start escrow.");
+            }
+        }
+
+        // Torx Verification & Release Escrow Flow
+        window.promptTorxRelease = function(escrowId, listingId) {
+            const currentHandle = localStorage.getItem('aero_active_handle');
+            if(currentHandle !== 'torx') {
+                alert("Only escrow agent Torx can verify and release transactions!");
+                return;
+            }
+
+            const passwordModal = document.getElementById('passwordModal');
+            const confirmBtn = document.getElementById('confirmActionBtn');
+            const challengeInput = document.getElementById('challengePassword');
+            document.getElementById('passwordModalTitle').innerText = "Torx Escrow Verification (jj)";
+            document.getElementById('passwordModalDesc').innerText = "Enter Torx password (jj) to verify and release transaction.";
+            challengeInput.value = '';
+            passwordModal.classList.remove('hidden');
+
+            confirmBtn.onclick = async function() {
+                const enteredPw = challengeInput.value;
+                if(!enteredPw) {
+                    alert("Password required.");
+                    return;
+                }
+
+                try {
+                    const userSnap = await getDoc(doc(db, "users", "torx"));
+                    const correctHash = userSnap.data().passwordHash;
+                    const enteredHash = await hashString(enteredPw);
+
+                    if(correctHash !== enteredHash) {
+                        alert("Incorrect password for Torx! Verification failed.");
+                        return;
+                    }
+
+                    // Release escrow and mark listing sold
+                    await updateDoc(doc(db, "escrows", escrowId), { status: 'verified_and_released' });
+                    if(listingId) {
+                        await updateDoc(doc(db, "listings", listingId), { status: 'sold' });
+                    }
+
+                    alert("Transaction verified and released successfully by Torx!");
+                    passwordModal.classList.add('hidden');
+                } catch(err) {
+                    console.error("Torx verification error:", err);
+                    alert("Verification error.");
+                }
+            }
+        }
+
         // Secure Status & Delete Modification Trigger with Password Challenge
         window.promptPasswordAction = function(id, targetStatus) {
             closeModal();
             const passwordModal = document.getElementById('passwordModal');
             const confirmBtn = document.getElementById('confirmActionBtn');
             const challengeInput = document.getElementById('challengePassword');
+            document.getElementById('passwordModalTitle').innerText = "Security Verification Required";
+            document.getElementById('passwordModalDesc').innerText = "Enter your account password to verify ownership before modifying this listing.";
             challengeInput.value = '';
             passwordModal.classList.remove('hidden');
 
-            // Replace onclick safely
             confirmBtn.onclick = async function() {
                 const enteredPw = challengeInput.value;
                 if(!enteredPw) {
@@ -539,7 +658,6 @@
                         return;
                     }
 
-                    // Password verified, proceed with listing change
                     const ref = doc(db, "listings", id);
                     if(targetStatus === 'deleted') {
                         await deleteDoc(ref);
@@ -600,6 +718,7 @@
                 <p><strong>Contact / Social:</strong> ${escapeHtml(data.contact)}</p>
                 <p><strong>Shipping Address:</strong> ${escapeHtml(data.address)}</p>
                 <p><strong>Status:</strong> ${data.status.toUpperCase()}</p>
+                <p class="text-amber-300"><strong>Escrow Backing:</strong> Managed by Torx (Verified by jj)</p>
             `;
 
             if(data.type === 'exchange') {
@@ -612,6 +731,10 @@
 
             let footerHTML = `<button onclick="closeModal()" class="glossy-button px-4 py-2 text-[10px] uppercase rounded-xl font-bold">Close</button>`;
             
+            if(data.status === 'active' && !isOwner) {
+                footerHTML += `<button onclick="initiateEscrow('${id}', '${escapeHtml(data.title)}', '${escapeHtml(data.handle)}'); closeModal();" class="glossy-button bg-amber-500/40 px-4 py-2 text-[10px] uppercase rounded-xl font-bold text-amber-200">Initiate Escrow Trade</button>`;
+            }
+
             if(data.type === 'auction' && data.status !== 'sold' && !isOwner) {
                 footerHTML += `<button onclick="placeBid('${id}', ${data.currentBid}); closeModal();" class="glossy-button bg-aeroAqua/40 px-4 py-2 text-[10px] uppercase rounded-xl font-bold text-white">Place Bid</button>`;
             }
@@ -632,7 +755,46 @@
             document.getElementById('detailModal').classList.add('hidden');
         }
 
-        // Real-Time Firebase Listener
+        // Real-Time Escrow Listener
+        const escrowsQuery = query(collection(db, "escrows"), orderBy("createdAt", "desc"));
+        onSnapshot(escrowsQuery, (snapshot) => {
+            escrowFeed.innerHTML = "";
+            if(snapshot.empty) {
+                escrowFeed.innerHTML = `<div class="glass-panel p-4 text-center text-xs text-white/50 rounded-2xl">No active escrow transactions.</div>`;
+                return;
+            }
+
+            snapshot.forEach((docSnap) => {
+                const esc = docSnap.data();
+                const escId = docSnap.id;
+                const isReleased = esc.status === 'verified_and_released';
+                const currentHandle = localStorage.getItem('aero_active_handle');
+
+                const card = document.createElement('div');
+                card.className = `glass-panel p-4 rounded-2xl space-y-2 ${isReleased ? 'opacity-60' : ''}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[9px] uppercase text-amber-300 font-bold">ESCROW // AGENT: @${escapeHtml(esc.escrowAgent)}</span>
+                            <h3 class="text-xs text-white font-extrabold mt-0.5">${escapeHtml(esc.title)}</h3>
+                        </div>
+                        <span class="text-[9px] px-2 py-0.5 rounded-full bg-black/40 border border-white/20">${esc.status.toUpperCase()}</span>
+                    </div>
+                    <div class="text-[11px] text-white/70 space-y-1">
+                        <p><strong>Buyer:</strong> @${escapeHtml(esc.buyer)} | <strong>Seller:</strong> @${escapeHtml(esc.seller)}</p>
+                    </div>
+                    <div class="bg-black/30 p-2.5 rounded-xl border border-white/10 text-[11px] flex justify-between items-center">
+                        <span class="text-white/60 text-[10px]">Awaiting Torx (jj) Verification</span>
+                        ${!isReleased && currentHandle === 'torx' ? `
+                            <button onclick="promptTorxRelease('${escId}', '${esc.listingId}')" class="glossy-button bg-amber-500/40 px-3 py-1.5 text-[10px] uppercase font-bold rounded-lg text-amber-200">Verify & Release</button>
+                        ` : `<span class="text-aeroAqua font-bold text-[10px]">${isReleased ? 'Released' : 'Locked'}</span>`}
+                    </div>
+                `;
+                escrowFeed.appendChild(card);
+            });
+        });
+
+        // Real-Time Listings Listener
         const q = query(collection(db, "listings"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             marketFeed.innerHTML = "";
@@ -640,7 +802,6 @@
 
             let marketCount = 0;
             let auctionCount = 0;
-            const currentHandle = localStorage.getItem('aero_active_handle');
 
             if(snapshot.empty) {
                 marketFeed.innerHTML = `<div class="glass-panel p-4 text-center text-xs text-white/50 rounded-2xl">No network listings found.</div>`;
@@ -651,8 +812,7 @@
             snapshot.forEach((docSnap) => {
                 const data = docSnap.data();
                 const id = docSnap.id;
-                const isOwner = currentHandle && data.handle === currentHandle;
-                const isSold = data.status === 'sold';
+                const isSold = data.status === 'sold' || data.status === 'in_escrow';
                 const encodedData = encodeURIComponent(JSON.stringify(data));
 
                 if(data.type === 'auction') {
